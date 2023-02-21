@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ lesson_* ]
     pull_request:
-      branches: [ master ]
+      branches: [ lesson_* ]
 
   workflow_dispatch:
 
@@ -19,4 +19,4 @@ jobs:
         with:
           java-version: '14'
       - name: Build with gradle
-        uses: ./gradlew build
+        run: ./gradlew build
