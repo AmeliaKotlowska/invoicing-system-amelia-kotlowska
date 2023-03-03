@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +67,7 @@ public class App {
       throw new RuntimeException(e);
     }
 
-    ObjectMapper objectMapperYaml = new ObjectMapper(new JsonFactory());
+    ObjectMapper objectMapperYaml = new ObjectMapper(new YAMLFactory());
 
     objectMapperYaml.findAndRegisterModules();
     objectMapperYaml.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
