@@ -1,4 +1,4 @@
-package pl.futurecollars.invoicing;
+package pl.futurecollars.invoicing.configuration;
 
 public class Configuration {
 

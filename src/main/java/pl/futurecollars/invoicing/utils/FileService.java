@@ -15,7 +15,7 @@ public class FileService {
     return Files.readAllLines(path);
   }
 
-  public void writeLineToFile(Object path, int lines) throws IOException {
-    Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
+  public void writeLineToFile(Path path, Object line) throws IOException {
+    Files.write(path, (line + System.lineSeparator()).getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
   }
 }
