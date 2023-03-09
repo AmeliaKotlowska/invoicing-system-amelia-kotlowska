@@ -5,22 +5,22 @@ import pl.futurecollars.invoicing.db.memory.InMemoryDatabase
 import pl.futurecollars.invoicing.model.Invoice
 import spock.lang.Specification
 
-import static pl.futurecollars.invoicing.TestHelpers.invoice
+import static pl.futurecollars.invoicing.helpers.TestHelpers.invoice
 
 class InvoiceServiceIntegrationTest extends Specification {
-    private InvoiceService service;
-    private List<Invoice> invoices;
+    private InvoiceService service
+    private List<Invoice> invoices
 
     def setup() {
-        Database db = new InMemoryDatabase();
-        service = new InvoiceService(db);
+        Database db = new InMemoryDatabase()
+        service = new InvoiceService(db)
 
         invoices = (1..12).collect { invoice(it) }
     }
 
     def "should save invoices returning sequential id, invoice should have id set to correct value, get by id returns saved invoice"() {
         when:
-        def ids = invoices.collect({ service.save(it) })
+        def ids = invoices.collect{ service.save(it) }
 
         then:
         ids == (1..invoices.size()).collect()
