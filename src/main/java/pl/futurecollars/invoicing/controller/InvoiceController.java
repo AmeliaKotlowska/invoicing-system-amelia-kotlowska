@@ -18,6 +18,7 @@ import pl.futurecollars.invoicing.service.InvoiceService;
 @AllArgsConstructor
 @RequestMapping("/invoice")
 public class InvoiceController {
+
   private final InvoiceService invoiceService;
 
   @GetMapping
