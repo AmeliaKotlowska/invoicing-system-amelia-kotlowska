@@ -1,7 +1,7 @@
 package pl.futurecollars.invoicing.controller;
 
 import java.util.List;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +15,16 @@ import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.service.InvoiceService;
 
 @RestController
-@AllArgsConstructor
+
 @RequestMapping("/invoice")
 public class InvoiceController {
 
   private final InvoiceService invoiceService;
+
+  @Autowired
+  public InvoiceController(InvoiceService invoiceService) {
+    this.invoiceService = invoiceService;
+  }
 
   @GetMapping
   public List<Invoice> getInvoices() {
