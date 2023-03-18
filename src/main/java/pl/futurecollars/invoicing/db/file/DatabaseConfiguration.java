@@ -23,7 +23,7 @@ public class DatabaseConfiguration {
   }
 
   @Bean
-  public Database fileBaseDatabase(IdService idService, FileService fileService, JsonService jsonService) throws IOException {
+  public Database fileBasedDatabase(IdService idService, FileService fileService, JsonService jsonService) throws IOException {
     Path databaseFilePath = Files.createTempFile(DATABASE_LOCATION, INVOICES_FILE_NAME);
     return new FileBasedDatabase(databaseFilePath, idService, fileService, jsonService);
   }
