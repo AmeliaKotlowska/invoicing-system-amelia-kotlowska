@@ -15,7 +15,6 @@ import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.service.InvoiceService;
 
 @RestController
-
 @RequestMapping("/invoice")
 public class InvoiceController {
 
