@@ -22,7 +22,7 @@ import static pl.futurecollars.invoicing.helpers.TestHelpers.invoice
 @Stepwise
 @AutoConfigureMockMvc
 @SpringBootTest
-class InvoiceControllerTest extends Specification {
+class InvoiceControllerStepwiseTest extends Specification {
 
     @Autowired
     private MockMvc mockMvc
