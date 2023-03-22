@@ -51,11 +51,10 @@ class InvoiceControllerStepwiseTest extends Specification {
 
     def 'add single invoice'() {
         given:
-        def invoice = invoice(1)
-        def invoiceAsJson = jsonService.convertToJson(invoice)
+        def invoiceAsJson = jsonService.convertToJson(originalInvoice)
 
         when:
-        invoiceId = mockMvc.perform(post("/invoices")
+        def result = mockMvc.perform(post("/invoices")
                 .content(invoiceAsJson)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -63,8 +62,10 @@ class InvoiceControllerStepwiseTest extends Specification {
                 .response
                 .contentAsString
 
+        invoiceId = Integer.valueOf(result)
+
         then:
-        invoiceId.toString() > "0"
+        invoiceId > 0
     }
 
     def 'one invoice is returned when getting all invoices'() {
@@ -94,7 +95,7 @@ class InvoiceControllerStepwiseTest extends Specification {
         expectedInvoice.id = invoiceId
 
         when:
-        def response = mockMvc.perform(get("/invoices/1"))
+        def response = mockMvc.perform(get("/invoices/$invoiceId"))
                 .andExpect(status().isOk())
                 .andReturn()
                 .response
@@ -123,12 +124,12 @@ class InvoiceControllerStepwiseTest extends Specification {
 
     def 'delete single invoice'() {
         expect:
-        mockMvc.perform(delete("/invoices/1")).andExpect(status().isNoContent())
+        mockMvc.perform(delete("/invoices/$invoiceId")).andExpect(status().isNoContent())
 
         and:
-        mockMvc.perform(delete("/invoices/1")).andExpect(status().isNotFound())
+        mockMvc.perform(delete("/invoices/$invoiceId")).andExpect(status().isNotFound())
 
         and:
-        mockMvc.perform(get("/invoices/1")).andExpect(status().isNotFound())
+        mockMvc.perform(get("/invoices/$invoiceId")).andExpect(status().isNotFound())
     }
 }
