@@ -121,6 +121,25 @@ class InvoiceControllerStepwiseTest extends Specification {
                 .andExpect(status().isNoContent())
     }
 
+    def 'updated invoice is returned correctly'() {
+        given:
+        def expectedInvoice = originalInvoice
+        expectedInvoice.id = invoiceId
+        expectedInvoice.date = updatedDate
+
+        when:
+        def response = mockMvc.perform(get("/invoices/$invoiceId"))
+                .andExpect(status().isOk())
+                .andReturn()
+                .response
+                .contentAsString
+
+        def invoices = jsonService.convertToObject(response, Invoice)
+
+        then:
+        invoices == expectedInvoice
+    }
+
 
     def 'delete single invoice'() {
         expect:
