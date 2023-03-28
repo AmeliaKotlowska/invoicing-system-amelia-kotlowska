@@ -8,7 +8,6 @@ import java.util.Optional;
 import pl.futurecollars.invoicing.db.Database;
 import pl.futurecollars.invoicing.model.Invoice;
 
-
 public class InMemoryDatabase implements Database {
 
   private final Map<Integer, Invoice> invoices = new HashMap<>();
@@ -42,4 +41,5 @@ public class InMemoryDatabase implements Database {
   public Optional<Invoice> delete(int id) {
     return Optional.ofNullable(invoices.remove(id));
   }
+
 }
