@@ -1,2 +1,19 @@
 #konfigurowanie aplikacji stringowej
+server:
+  port: 7777
 
+invoicing-system:
+  database: file
+  database.directory: db
+  database.invoices.file: invoices.txt
+  database.id.file: id.txt
+
+logging:
+  level:
+    org:
+      springframework:
+        boot: INFO
+    pl:
+      futurecollars:
+        invoicing: WARN
+        invoicing.db: DEBUG
