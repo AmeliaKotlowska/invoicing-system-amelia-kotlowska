@@ -26,6 +26,10 @@ plugins {
     id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
 }
 
+group = 'pl.futurecollars'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '15'
+
 repositories {
     mavenCentral()
 }
@@ -47,6 +51,16 @@ dependencies {
     testImplementation "org.spockframework:spock-core:${spockVersion}"
     testImplementation "org.spockframework:spock-spring:${spockVersion}"
 
+}
+
+application {
+    // Define the main class for the application.
+    mainClassName = 'pl.futurecollars.invoicing.App'
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
 }
 
 jacocoTestCoverageVerification {
@@ -90,11 +104,11 @@ check {
 }
 
 jacocoTestReport {
-    dependsOn test
-}
-
-tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Werror"
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
 }
 
 checkstyle {
