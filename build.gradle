@@ -1,11 +1,10 @@
-
 buildscript {
     ext {
         groovyVersion = '3.0.16'
         lombokVersion = '1.18.26'
-        spockVersion = '2.3-groovy-3.0'
-        springBootVersion = '2.4.2'
-        springDependencyManagementVersion = '1.0.11.RELEASE'
+        spockVersion = '2.3-groovy-4.0'
+        springBootVersion = '2.7.9'
+        springDependencyManagementVersion = '1.0.15.RELEASE'
         springFoxStarterVersion = '3.0.0'
     }
 }
@@ -22,26 +21,13 @@ plugins {
 
     id 'jacoco'
 
-    id 'org.springframework.boot' version '2.7.9'
+    id 'org.springframework.boot' version "${springBootVersion}"
 
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-
+    id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
 }
-
-group = 'pl.futurecollars'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '15'
 
 repositories {
-
     mavenCentral()
-}
-
-java{
-    toolchain{
-        languageVersion = JavaLanguageVersion.of(15)
-        vendor = JvmVendorSpec.ADOPTOPENJDK
-    }
 }
 
 dependencies {
@@ -50,41 +36,17 @@ dependencies {
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "io.springfox:springfox-boot-starter:${springFoxStarterVersion}"
+    implementation "io.springfox:springfox-swagger-ui:${springFoxStarterVersion}"
 
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
     testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
 
-    testImplementation "org.codehaus.groovy:groovy:${groovyVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "org.spockframework:spock-core:${spockVersion}"
     testImplementation "org.spockframework:spock-spring:${spockVersion}"
 
-    implementation "io.springfox:springfox-boot-starter:${springFoxStarterVersion}"
-    implementation "io.springfox:springfox-swagger-ui:${springFoxStarterVersion}"
-
-}
-
-test {
-    finalizedBy jacocoTestReport // report is always generated after tests run
-    finalizedBy jacocoTestCoverageVerification
-}
-
-jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
-}
-
-jacoco {
-    toolVersion = "0.8.8"
-    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
-}
-
-jacocoTestReport {
-    reports {
-        xml.required = false
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
-    }
 }
 
 jacocoTestCoverageVerification {
@@ -105,9 +67,34 @@ jacocoTestCoverageVerification {
     }
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: 'pl/futurecollars/invoicing/InvoiceApplication.class')
+            fileTree(dir: it, exclude:
+                    ['pl/futurecollars/invoicing/InvoiceApplication.class',
+                     'pl/futurecollars/invoicing/db/DatabaseConfiguration.class'])
         }))
     }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(15)
+        vendor = JvmVendorSpec.ADOPTOPENJDK
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+check {
+    finalizedBy jacocoTestCoverageVerification
+}
+
+jacocoTestReport {
+    dependsOn test
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Werror"
 }
 
 checkstyle {
