@@ -11,7 +11,7 @@ import pl.futurecollars.invoicing.service.InvoiceService;
 
 @RestController
 @AllArgsConstructor
-public class InvoiceController implements InvoiceApi{
+public class InvoiceController implements InvoiceApi {
 
   private final InvoiceService invoiceService;
 

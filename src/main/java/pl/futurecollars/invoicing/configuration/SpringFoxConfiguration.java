@@ -1,4 +1,5 @@
 package pl.futurecollars.invoicing.configuration;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -14,7 +15,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class SpringFoxConfiguration {
 
   @Bean
-  public Docket docket(){
+  public Docket docket() {
     return new Docket(DocumentationType.SWAGGER_2)
         .select()
         .apis(RequestHandlerSelectors.basePackage("pl.futurecollars"))
@@ -26,7 +27,7 @@ public class SpringFoxConfiguration {
         .apiInfo(apiInfo());
   }
 
-  private ApiInfo apiInfo(){
+  private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
         .description("Application to menage invoices")
         .license("No license available - private ")
