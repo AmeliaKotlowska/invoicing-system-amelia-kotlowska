@@ -6,6 +6,8 @@ buildscript {
         spockVersion = '2.3-groovy-3.0'
         springBootVersion = '2.4.2'
         springDependencyManagementVersion = '1.0.11.RELEASE'
+        springFoxStarterVersion = '3.0.0'
+        springFoxUiVersion = '3.0.0'
     }
 }
 
@@ -21,9 +23,9 @@ plugins {
 
     id 'jacoco'
 
-    id 'org.springframework.boot' version '2.7.9'
+    id 'org.springframework.boot' version "${springBootVersion}"
 
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
 
 }
 
@@ -44,22 +46,28 @@ java{
 }
 
 dependencies {
+
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-
-    compileOnly "org.projectlombok:lombok:${lombokVersion}"
-
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
     testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
 
-    testImplementation "org.codehaus.groovy:groovy:${groovyVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
+    testImplementation "org.codehaus.groovy:groovy:${groovyVersion}"
+
     testImplementation "org.spockframework:spock-core:${spockVersion}"
     testImplementation "org.spockframework:spock-spring:${spockVersion}"
 
+    implementation "io.springfox:springfox-boot-starter:${springFoxStarterVersion}"
+    implementation "io.springfox:springfox-swagger-ui:${springFoxUiVersion}"
 
+}
+
+bootJar {
+    enabled = false
 }
 
 test {
