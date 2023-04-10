@@ -46,7 +46,7 @@ class TaxCalculatorControllerIntegrationTest extends AbstractControllerTest {
         addUniqueInvoices(10)
 
         when:
-        def taxCalculatorResponse = calculateTax(5)
+        def taxCalculatorResponse = calculateTax(company(5))
 
         then:
         taxCalculatorResponse.income == 15000
@@ -57,7 +57,7 @@ class TaxCalculatorControllerIntegrationTest extends AbstractControllerTest {
         taxCalculatorResponse.vatToReturn == 1200.0
 
         when:
-        taxCalculatorResponse = calculateTax(10)
+        taxCalculatorResponse = calculateTax(company(10))
 
         then:
         taxCalculatorResponse.income == 55000
@@ -68,7 +68,7 @@ class TaxCalculatorControllerIntegrationTest extends AbstractControllerTest {
         taxCalculatorResponse.vatToReturn == 4400.0
 
         when:
-        taxCalculatorResponse = calculateTax(15)
+        taxCalculatorResponse = calculateTax(company(15))
 
         then:
         taxCalculatorResponse.income == 0
@@ -84,7 +84,7 @@ class TaxCalculatorControllerIntegrationTest extends AbstractControllerTest {
         addUniqueInvoices(15) // sellers: 1-15, buyers: 10-25, 10-15 overlapping
 
         when:
-        def taxCalculatorResponse = calculateTax(12)
+        def taxCalculatorResponse = calculateTax(company(12))
 
         then:
         taxCalculatorResponse.income == 78000
