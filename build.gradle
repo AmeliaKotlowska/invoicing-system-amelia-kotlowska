@@ -66,6 +66,11 @@ dependencies {
     implementation "io.springfox:springfox-boot-starter:${springFoxStarterVersion}"
     implementation "io.springfox:springfox-swagger-ui:${springFoxUiVersion}"
 
+    implementation "org.springframework.boot:spring-boot-starter-jdbc"
+    compile "org.flywaydb:flyway-core:7.6.0"
+    runtimeOnly 'com.h2database:h2:1.4.200'
+    runtimeOnly 'org.postgresql:postgresql:42.2.19'
+
 }
 
 bootJar {
@@ -127,3 +132,18 @@ checkstyle {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+task testWithFileDatabase(type: Test) {
+    systemProperty 'spring.profiles.active', 'file'
+}
+
+task testWithMemoryDatabase(type: Test) {
+    systemProperty 'spring.profiles.active', 'memory'
+}
+
+task testWithSqlDatabase(type: Test) {
+    systemProperty 'spring.profiles.active', 'sql'
+}
+
+check.dependsOn testWithFileDatabase
+check.dependsOn testWithMemoryDatabase
