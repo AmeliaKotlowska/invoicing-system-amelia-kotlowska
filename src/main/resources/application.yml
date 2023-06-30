@@ -1,12 +1,6 @@
-#konfigurowanie aplikacji stringowej
+
 server:
   port: 7777
-
-invoicing-system:
-  database: file
-  database.directory: db
-  database.invoices.file: invoices.txt
-  database.id.file: id.txt
 
 logging:
   level:
@@ -17,3 +11,9 @@ logging:
       futurecollars:
         invoicing: INFO
         invoicing.db: DEBUG
+
+spring:
+  profiles:
+    active: dev
+  flyway:
+    enabled: false
