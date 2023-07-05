@@ -7,7 +7,7 @@ import java.nio.file.Files
 import java.nio.file.Path;
 
 class IdServiceTest extends Specification {
-  private Path nextIdDbPath = File.createTempFile('nextId', '.txt').toPath()
+  private final Path nextIdDbPath = File.createTempFile('nextId', '.txt').toPath()
 
   def "next id starts from 1 if file was empty"() {
     given:
