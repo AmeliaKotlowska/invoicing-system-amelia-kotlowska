@@ -23,12 +23,12 @@ import pl.futurecollars.invoicing.model.Vat;
 public class SqlDatabase implements Database {
 
   public static final String SELECT_QUERY = "select i.id, i.date, i.number, "
-      + "c1.id as seller_id, c1.name as seller_name, c1.tax_identification_number as seller_tax_id, c1.address as seller_address, "
-      + "c1.pension_insurance as seller_pension_insurance, c1.health_insurance as seller_health_insurance, "
+      + "c.id as seller_id, c.name as seller_name, c.tax_identification_number as seller_tax_id, c.address as seller_address, "
+      + "c.pension_insurance as seller_pension_insurance, c1.health_insurance as seller_health_insurance, "
       + "c2.id as buyer_id, c2.name as buyer_name, c2.tax_identification_number as buyer_tax_id, c2.address as buyer_address, "
       + "c2.pension_insurance as buyer_pension_insurance, c2.health_insurance as buyer_health_insurance "
       + "from invoice i "
-      + "inner join company c1 on i.seller = c1.id "
+      + "inner join company c on i.seller = c.id "
       + "inner join company c2 on i.buyer = c2.id";
   private final JdbcTemplate jdbcTemplate;
 
