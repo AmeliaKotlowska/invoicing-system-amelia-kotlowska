@@ -102,10 +102,10 @@ public class SqlDatabase implements Database {
     jdbcTemplate.update(connection -> {
       PreparedStatement ps = connection
           .prepareStatement(
-              "insert into car (registration_number, personal_use) values (?, ?);",
+              "insert into car (registration_number, personal_user) values (?, ?);",
               new String[] {"id"});
       ps.setString(1, car.getRegistrationNumber());
-      ps.setBoolean(2, car.isPersonalUse());
+      ps.setBoolean(2, car.isPersonalUser());
       return ps;
     }, keyHolder);
 
@@ -142,7 +142,7 @@ public class SqlDatabase implements Database {
               .expenseRelatedToCar(response.getObject("registration_number") != null
                   ? Car.builder()
                   .registrationNumber(response.getString("registration_number"))
-                  .personalUse(response.getBoolean("personal_use"))
+                  .personalUser(response.getBoolean("personal_user"))
                   .build()
                   : null)
               .build());

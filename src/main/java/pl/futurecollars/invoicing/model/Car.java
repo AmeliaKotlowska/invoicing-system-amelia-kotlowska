@@ -21,6 +21,6 @@ public class Car {
   private String registrationNumber;
 
   @ApiModelProperty(value = "Specifies if car is used also for personal reasons", required = true, example = "true")
-  private boolean personalUse;
+  private boolean personalUser;
 
 }
