@@ -1,6 +1,5 @@
 package pl.futurecollars.invoicing.db.sql;
 
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.util.HashMap;
