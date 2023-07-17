@@ -24,7 +24,7 @@ public class SqlDatabase implements Database {
 
   public static final String SELECT_QUERY = "select i.id, i.date, i.number, "
       + "c.id as seller_id, c.name as seller_name, c.tax_identification_number as seller_tax_id, c.address as seller_address, "
-      + "c.pension_insurance as seller_pension_insurance, c1.health_insurance as seller_health_insurance, "
+      + "c.pension_insurance as seller_pension_insurance, c.health_insurance as seller_health_insurance, "
       + "c2.id as buyer_id, c2.name as buyer_name, c2.tax_identification_number as buyer_tax_id, c2.address as buyer_address, "
       + "c2.pension_insurance as buyer_pension_insurance, c2.health_insurance as buyer_health_insurance "
       + "from invoice i "
@@ -104,7 +104,7 @@ public class SqlDatabase implements Database {
               "insert into car (registration_number, personal_user) values (?, ?);",
               new String[] {"id"});
       ps.setString(1, car.getRegistrationNumber());
-      ps.setBoolean(2, car.isPersonalUser());
+      ps.setBoolean(2, car.isPersonalUse());
       return ps;
     }, keyHolder);
 
@@ -141,7 +141,7 @@ public class SqlDatabase implements Database {
               .expenseRelatedToCar(response.getObject("registration_number") != null
                   ? Car.builder()
                   .registrationNumber(response.getString("registration_number"))
-                  .personalUser(response.getBoolean("personal_user"))
+                  .personalUse(response.getBoolean("personal_user"))
                   .build()
                   : null)
               .build());

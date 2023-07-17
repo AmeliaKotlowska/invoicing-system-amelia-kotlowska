@@ -88,7 +88,7 @@ abstract class AbstractDatabaseTest extends Specification {
         database.update(213, invoices.get(1)) == Optional.empty()
     }
 
-    private static Invoice resetIds(Invoice invoice) {
+    def Invoice resetIds(Invoice invoice) {
         invoice.getBuyer().id = 0
         invoice.getSeller().id = 0
         invoice
