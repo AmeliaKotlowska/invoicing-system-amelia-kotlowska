@@ -7,8 +7,8 @@ import java.nio.file.Path
 
 class FileServiceTest extends Specification {
 
-  private FileService fileService = new FileService()
-  private Path path = File.createTempFile('lines', '.txt').toPath()
+  private final FileService fileService = new FileService()
+  private final Path path = File.createTempFile('lines', '.txt').toPath()
 
   def "line is correctly appended to file"() {
     setup:

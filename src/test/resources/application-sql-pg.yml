@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/invoicing-test
     username: postgres
-    password: 7845
+    password: postgres
     driver-class-name: org.postgresql.Driver
   flyway:
     enabled: true
