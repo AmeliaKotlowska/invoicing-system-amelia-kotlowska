@@ -1,4 +1,10 @@
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
@@ -8,4 +14,4 @@ spring:
     enabled: true
 
 invoicing-system:
-  database: sql
+  database: jpa
