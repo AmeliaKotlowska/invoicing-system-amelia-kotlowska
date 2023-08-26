@@ -84,7 +84,7 @@ public class SqlDatabase implements Database {
     jdbcTemplate.update(connection -> {
       PreparedStatement ps = connection
           .prepareStatement(
-              "insert into car (registration_number, personal_user) values (?, ?);",
+              "insert into car (registration_number, personal_use) values (?, ?);",
               new String[] {"id"});
       ps.setString(1, car.getRegistrationNumber());
       ps.setBoolean(2, car.isPersonalUse());
@@ -124,7 +124,7 @@ public class SqlDatabase implements Database {
               .expenseRelatedToCar(response.getObject("registration_number") != null
                   ? Car.builder()
                   .registrationNumber(response.getString("registration_number"))
-                  .personalUse(response.getBoolean("personal_user"))
+                  .personalUse(response.getBoolean("personal_use"))
                   .build()
                   : null)
               .build());

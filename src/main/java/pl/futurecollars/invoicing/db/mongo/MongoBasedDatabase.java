@@ -1,6 +1,5 @@
 package pl.futurecollars.invoicing.db.mongo;
 
-
 import com.mongodb.client.MongoCollection;
 import java.util.List;
 import java.util.Optional;
