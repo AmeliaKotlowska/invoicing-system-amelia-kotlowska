@@ -9,7 +9,6 @@ import pl.futurecollars.invoicing.utils.JsonService
 import java.nio.file.Files
 import java.nio.file.Path
 
-
 class FileBasedDatabaseTest extends AbstractDatabaseTest {
 
     Path dbFilePath

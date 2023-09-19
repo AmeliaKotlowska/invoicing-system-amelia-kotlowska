@@ -1,8 +1,8 @@
-
 buildscript {
     ext {
         groovyVersion = '3.0.16'
         lombokVersion = '1.18.26'
+        mongoVersion = '3.12.8'
         spockVersion = '2.3-groovy-3.0'
         springBootVersion = '2.4.2'
         springDependencyManagementVersion = '1.0.11.RELEASE'
@@ -28,7 +28,6 @@ plugins {
     id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
 
 
-
 }
 
 group = 'pl.futurecollars'
@@ -40,8 +39,8 @@ repositories {
     mavenCentral()
 }
 
-java{
-    toolchain{
+java {
+    toolchain {
         languageVersion = JavaLanguageVersion.of(15)
         vendor = JvmVendorSpec.ADOPTOPENJDK
     }
@@ -72,19 +71,22 @@ dependencies {
     runtimeOnly 'com.h2database:h2:1.4.200'
     runtimeOnly 'org.postgresql:postgresql:42.2.19'
 
+    implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
+
 }
 
 bootJar {
     enabled = false
 }
 
-test {
+check {
     finalizedBy jacocoTestReport // report is always generated after tests run
     finalizedBy jacocoTestCoverageVerification
 }
 
 jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
+    executionData tasks.withType(Test)
+    dependsOn check
 }
 
 jacoco {
@@ -136,26 +138,32 @@ tasks.named('test') {
 
 task testWithFileDatabase(type: Test) {
     systemProperty 'spring.profiles.active', 'file'
+    useJUnitPlatform()
 }
 
 task testWithMemoryDatabase(type: Test) {
     systemProperty 'spring.profiles.active', 'memory'
+    useJUnitPlatform()
 }
 
 task testWithSqlDatabase(type: Test) {
     systemProperty 'spring.profiles.active', 'sql'
+    useJUnitPlatform()
 }
 
 task testWithJpaDatabase(type: Test) {
     systemProperty 'spring.profiles.active', 'jpa'
+    useJUnitPlatform()
 }
 
 task testWithJpaFlywayDatabase(type: Test) {
     systemProperty 'spring.profiles.active', 'jpa-flyway'
+    useJUnitPlatform()
 }
 
-task testWithPostgreSqlDatabase(type: Test) {
-    systemProperty 'spring.profiles.active', 'sql-pg'
+task testWithMongoDatabase(type: Test) {
+    systemProperty 'spring.profiles.active', 'mongo'
+    useJUnitPlatform()
 }
 
 check.dependsOn testWithFileDatabase
@@ -163,8 +171,13 @@ check.dependsOn testWithMemoryDatabase
 check.dependsOn testWithSqlDatabase
 check.dependsOn testWithJpaDatabase
 check.dependsOn testWithJpaFlywayDatabase
+check.dependsOn testWithMongoDatabase
 
 String osName = System.getProperty("os.name").toLowerCase()
 if (osName.contains("mac")) {
+    task testWithPostgreSqlDatabase(type: Test) {
+        systemProperty 'spring.profiles.active', 'sql-pg'
+    }
+
     check.dependsOn testWithPostgreSqlDatabase
 }
