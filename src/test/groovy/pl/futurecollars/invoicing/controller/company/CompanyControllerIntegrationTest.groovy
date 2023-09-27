@@ -103,7 +103,7 @@ class CompanyControllerIntegrationTest extends AbstractControllerTest {
         expect:
         mockMvc.perform(
                 put("$COMPANY_ENDPOINT/$id")
-                        .content(jsonService.toJson(updatedCompany))
+                        .content(jsonService.convertToJson(updatedCompany))
                         .contentType(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isNoContent())

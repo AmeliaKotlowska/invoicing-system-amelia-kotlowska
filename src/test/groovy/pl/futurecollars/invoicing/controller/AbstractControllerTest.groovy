@@ -92,7 +92,7 @@ class AbstractControllerTest extends Specification {
     }
 
     String companyAsJson(long id) {
-        jsonService.toJson(company(id))
+        jsonService.convertToJson(company(id))
     }
 
     TaxCalculatorResult calculateTax(Company company) {
@@ -112,7 +112,7 @@ class AbstractControllerTest extends Specification {
         Integer.valueOf(
                 mockMvc.perform(
                         post(endpoint)
-                                .content(jsonService.toJson(item))
+                                .content(jsonService.convertToJson(item))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                         .andExpect(status().isOk())
@@ -129,7 +129,7 @@ class AbstractControllerTest extends Specification {
                 .response
                 .contentAsString
 
-        jsonService.toObject(response, clazz)
+        jsonService.convertToObject(response, clazz)
     }
 
     private <T> T getById(long id, Class<T> clazz, String endpoint) {
@@ -139,7 +139,7 @@ class AbstractControllerTest extends Specification {
                 .response
                 .contentAsString
 
-        jsonService.toObject(invoiceAsString, clazz)
+        jsonService.convertToObject(invoiceAsString, clazz)
     }
 
 }

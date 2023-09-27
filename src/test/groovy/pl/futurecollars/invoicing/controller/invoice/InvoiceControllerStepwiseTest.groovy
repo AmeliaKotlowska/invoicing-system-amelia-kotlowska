@@ -23,6 +23,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import pl.futurecollars.invoicing.db.Database
 
+import static pl.futurecollars.invoicing.helpers.TestHelpers.resetIds
+
 @Stepwise
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -46,8 +48,6 @@ class InvoiceControllerStepwiseTest extends Specification {
 
     def "database is reset to ensure clean state"() {
         expect:
-        MongoDatabase mongoDatabase = context.getBean(MongoDatabase)
-        mongoDatabase.drop()
         database != null
 
         when:
@@ -103,7 +103,7 @@ class InvoiceControllerStepwiseTest extends Specification {
 
         then:
         invoice.size() == 1
-        resetIds(invoices[0]) == resetIds(expectedInvoice)
+        resetIds(invoice[0]) == resetIds(expectedInvoice)
 
     }
 
