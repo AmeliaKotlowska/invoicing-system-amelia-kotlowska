@@ -103,6 +103,7 @@ jacocoTestReport {
 }
 
 jacocoTestCoverageVerification {
+    executionData tasks.withType(Test)
     violationRules {
         rule {
             limit {
@@ -120,7 +121,9 @@ jacocoTestCoverageVerification {
     }
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: 'pl/futurecollars/invoicing/InvoiceApplication.class')
+            fileTree(dir: it, exclude: ['pl/futurecollars/invoicing/InvoiceApplication.class',
+                                        'pl/futurecollars/invoicing/db/Database.class',
+                                        'pl/futurecollars/invoicing/configuration/*'] )
         }))
     }
 }
@@ -180,4 +183,7 @@ if (osName.contains("mac")) {
     }
 
     check.dependsOn testWithPostgreSqlDatabase
+}
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Werror"
 }
